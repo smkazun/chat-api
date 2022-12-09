@@ -11,8 +11,9 @@ public class ModuleConfig {
 
     @Bean
     public CreateUserCommand createUserCommand(UserRepository repository){
-
         return new CreateUserCommand(repository);
     }
+
+
 
 }

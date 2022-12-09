@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class JpaUserRepositoryImpl implements UserRepository {
-    JpaUserRepository repository;
+    IJpaUserRepository repository;
 
-    public JpaUserRepositoryImpl(JpaUserRepository repository){
+    public JpaUserRepositoryImpl(IJpaUserRepository repository){
         this.repository = repository;
     }
 
