@@ -1,7 +1,7 @@
 package org.chatapp.infrastructure.data.repositories;
 
 import org.chatapp.core.contracts.persistence.UserRepository;
-import org.chatapp.domain.utils.entities.User;
+import org.chatapp.domain.entities.User;
 import org.chatapp.infrastructure.data.entities.UserDTO;
 import org.springframework.stereotype.Repository;
 
@@ -25,6 +25,11 @@ public class JpaUserRepositoryImpl implements UserRepository {
     public User findUserByEmail(String email) {
         UserDTO result = repository.findByEmail(email);
         return result.fromThis();
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+       return repository.findByEmail(email) != null;
     }
 
 }

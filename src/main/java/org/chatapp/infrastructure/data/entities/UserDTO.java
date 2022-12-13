@@ -1,7 +1,7 @@
 package org.chatapp.infrastructure.data.entities;
 
 import jakarta.persistence.*;
-import org.chatapp.domain.utils.entities.User;
+import org.chatapp.domain.entities.User;
 
 import java.time.LocalDateTime;
 

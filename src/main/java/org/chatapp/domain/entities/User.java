@@ -1,4 +1,4 @@
-package org.chatapp.domain.utils.entities;
+package org.chatapp.domain.entities;
 
 import java.time.LocalDateTime;
 

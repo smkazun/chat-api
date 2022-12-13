@@ -1,8 +1,6 @@
 package org.chatapp.core.contracts.persistence;
 
-import org.chatapp.domain.utils.entities.User;
-import java.util.List;
-import java.util.Optional;
+import org.chatapp.domain.entities.User;
 
 public interface UserRepository {
 
@@ -11,6 +9,8 @@ public interface UserRepository {
 
     //public boolean existsByEmail(String email);
     public User findUserByEmail(String email);
+
+    boolean existsByEmail(String email);
     //public Optional<User> findUserById(long id);
 
 

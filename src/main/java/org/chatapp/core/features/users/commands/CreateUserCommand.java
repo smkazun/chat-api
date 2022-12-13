@@ -4,9 +4,10 @@ import org.chatapp.core.contracts.ICommand;
 import org.chatapp.core.contracts.boundary.IInputBoundary;
 import org.chatapp.core.contracts.boundary.IOutputBoundary;
 import org.chatapp.core.contracts.persistence.UserRepository;
+import org.chatapp.domain.exceptions.AlreadyInUseException;
 import org.chatapp.domain.utils.UserIdGenerator;
-import org.chatapp.domain.utils.entities.User;
-import org.chatapp.domain.utils.entities.UserBuilder;
+import org.chatapp.domain.entities.User;
+import org.chatapp.domain.entities.UserBuilder;
 
 import java.time.LocalDateTime;
 
@@ -20,12 +21,12 @@ public class CreateUserCommand implements ICommand<CreateUserCommand.InputBounda
     @Override
     public OutputBoundary execute(InputBoundary input) {
 
-        //if(repository.existsByEmail(input.getEmail())){
-            //throw new RuntimeException();
-        //}
+        if(repository.existsByEmail(input.getEmail())){
+            throw new AlreadyInUseException("Email %s is already registered", input.getEmail()); //TODO: move string to constant file
+        }
 
         User user = new UserBuilder()
-                .setUserId(UserIdGenerator.createUniqueId())
+                //.setUserId(UserIdGenerator.createUniqueId()) //TODO: maybe we dont need this
                 .setFirstName(input.getFirstName())
                 .setLastName(input.getLastName())
                 .setEmail(input.getEmail())

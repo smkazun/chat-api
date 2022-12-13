@@ -1,7 +1,7 @@
 package org.chatapp.infrastructure.mappers;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.chatapp.domain.utils.entities.User;
+import org.chatapp.domain.entities.User;
 import org.chatapp.infrastructure.data.entities.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -13,12 +13,14 @@ public final class CreateUserOutputMapper {
     public static ResponseEntity<ApiResponse> map(User user, HttpServletRequest request){
 
         URI location = ServletUriComponentsBuilder
-                .fromContextPath((HttpServletRequest) request)
+                .fromContextPath(request)
                 .path("/CreateUser/{id}")
                 .buildAndExpand(user.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(new ApiResponse(true, "User has been registered: " + user.toString()));
 
+        return ResponseEntity
+                .created(location)
+                .body(new ApiResponse(true, "User has been registered: " + user.toString()));
     }
 
 }

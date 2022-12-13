@@ -1,7 +1,7 @@
 package org.chatapp.infrastructure.data.entities;
 
 
-import org.chatapp.domain.utils.entities.User;
+import org.chatapp.domain.entities.User;
 
 public class UserResponse {
     private final String firstName;
