@@ -25,10 +25,13 @@ public class UserDTO {
     @Column(nullable = false)
     private LocalDateTime dateCreated;
 
+    @Column(nullable = true)
+    private LocalDateTime dateUpdated;
+
     public UserDTO() {
     }
 
-    public UserDTO(long id, String firstName, String lastName, String email, String password, LocalDateTime dateCreated)
+    public UserDTO(long id, String firstName, String lastName, String email, String password, LocalDateTime dateCreated, LocalDateTime dateUpdated)
     {
         this.id = id;
         this.firstName = firstName;
@@ -36,6 +39,7 @@ public class UserDTO {
         this.email = email;
         this.password = password;
         this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
     }
 
     public static UserDTO from(User user) {
@@ -44,7 +48,8 @@ public class UserDTO {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getDateCreated()
+                user.getDateCreated(),
+                user.getDateUpdated()
         );
     }
 
@@ -54,8 +59,8 @@ public class UserDTO {
                 lastName,
                 email,
                 password,
-                dateCreated
+                dateCreated,
+                dateUpdated
         );
     }
-
 }

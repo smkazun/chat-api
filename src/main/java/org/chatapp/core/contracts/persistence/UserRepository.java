@@ -2,16 +2,16 @@ package org.chatapp.core.contracts.persistence;
 
 import org.chatapp.domain.entities.User;
 
+import java.util.Optional;
+
 public interface UserRepository {
 
-
-    public User addUser(User user);
-
-    //public boolean existsByEmail(String email);
-    public User findUserByEmail(String email);
-
+    User save(User user);
+    Optional<User> findById(Long id);
+    Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
-    //public Optional<User> findUserById(long id);
+    void deleteById(Long id);
+
 
 
 }

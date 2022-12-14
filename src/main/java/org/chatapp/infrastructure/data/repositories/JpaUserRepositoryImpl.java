@@ -5,6 +5,8 @@ import org.chatapp.domain.entities.User;
 import org.chatapp.infrastructure.data.entities.UserDTO;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public class JpaUserRepositoryImpl implements UserRepository {
@@ -15,21 +17,32 @@ public class JpaUserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User addUser(User user){
-        final UserDTO data = UserDTO.from(user);
-        return repository.save(data).fromThis();
+    public User save(User user){
+        final UserDTO result = UserDTO.from(user);
+        return repository.save(result).fromThis();
+    }
+
+    @Override
+    public Optional<User> findById(Long id) {
+        final UserDTO result = repository.findById(id).get();
+        return Optional.ofNullable(result.fromThis());
     }
 
 
     @Override
-    public User findUserByEmail(String email) {
-        UserDTO result = repository.findByEmail(email);
-        return result.fromThis();
+    public Optional<User> findByEmail(String email) {
+        final UserDTO result = repository.findByEmail(email);
+        return Optional.ofNullable(result.fromThis());
     }
 
     @Override
     public boolean existsByEmail(String email) {
        return repository.findByEmail(email) != null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 
 }

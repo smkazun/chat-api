@@ -5,37 +5,49 @@ import org.chatapp.core.contracts.boundary.IInputBoundary;
 import org.chatapp.core.contracts.boundary.IOutputBoundary;
 import org.chatapp.core.contracts.persistence.UserRepository;
 import org.chatapp.domain.exceptions.AlreadyInUseException;
-import org.chatapp.domain.utils.UserIdGenerator;
 import org.chatapp.domain.entities.User;
 import org.chatapp.domain.entities.UserBuilder;
 
 import java.time.LocalDateTime;
 
-public class CreateUserCommand implements ICommand<CreateUserCommand.InputBoundary, CreateUserCommand.OutputBoundary> {
+/**
+ * A user can register itself to chat with others
+ */
+public class RegisterUserCommand implements ICommand<RegisterUserCommand.InputBoundary, RegisterUserCommand.OutputBoundary> {
     private UserRepository repository;
 
-    public CreateUserCommand(UserRepository repository) {
+    public RegisterUserCommand(UserRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public OutputBoundary execute(InputBoundary input) {
 
-        if(repository.existsByEmail(input.getEmail())){
-            throw new AlreadyInUseException("Email %s is already registered", input.getEmail()); //TODO: move string to constant file
-        }
+        throwExceptionIfExistsByEmail(input.getEmail());
 
-        User user = new UserBuilder()
-                //.setUserId(UserIdGenerator.createUniqueId()) //TODO: maybe we dont need this
+        User user = createUser(input);
+
+        return new OutputBoundary(repository.save(user));
+    }
+
+
+    private User createUser(InputBoundary input){
+        return new UserBuilder()
                 .setFirstName(input.getFirstName())
                 .setLastName(input.getLastName())
                 .setEmail(input.getEmail())
                 .setPassword(input.getPassword())
                 .setDateCreated(LocalDateTime.now())
+                //dateUpdate left blank
                 .build();
-
-        return new OutputBoundary(repository.addUser(user));
     }
+
+    private void throwExceptionIfExistsByEmail(String email){
+        if(repository.existsByEmail(email)){
+            throw new AlreadyInUseException("Email %s is already registered", email); //TODO: move string to constant file
+        }
+    }
+
 
 
 

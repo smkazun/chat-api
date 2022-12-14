@@ -10,6 +10,7 @@ public class UserBuilder {
     private String email;
     private String password;
     private LocalDateTime dateCreated;
+    private LocalDateTime dateUpdated;
 
     public UserBuilder setUserId(long userId) {
         this.userId = userId;
@@ -41,7 +42,12 @@ public class UserBuilder {
         return this;
     }
 
+    public UserBuilder setDateUpdated(LocalDateTime dateUpdated) {
+        this.dateUpdated = dateUpdated;
+        return this;
+    }
+
     public User build(){
-        return new User(userId, firstName, lastName, email, password, dateCreated);
+        return new User(userId, firstName, lastName, email, password, dateCreated, dateUpdated);
     }
 }

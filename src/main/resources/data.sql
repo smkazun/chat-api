@@ -5,7 +5,8 @@ CREATE TABLE APP_USERS (
      email VARCHAR(50) NOT NULL,
      password VARCHAR(50) NOT NULL,
      date_created DATETIME NOT NULL,
+     date_updated DATETIME,
      PRIMARY KEY (id)
 );
 
-INSERT INTO APP_USERS (first_name, last_name, email, password, date_created) VALUES ('Seb', 'Kazun', 'Someem@gmail.com', 'sldfjhsldkjfh', NOW());
+INSERT INTO APP_USERS (first_name, last_name, email, password, date_created, date_updated) VALUES ('Seb', 'Kazun', 'Someem@gmail.com', 'sldfjhsldkjfh', NOW(), null);

@@ -22,5 +22,4 @@ public final class CreateUserOutputMapper {
                 .created(location)
                 .body(new ApiResponse(true, "User has been registered: " + user.toString()));
     }
-
 }

@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 //TODO: research ^
 
 
-import org.chatapp.core.features.users.commands.CreateUserCommand;
+import org.chatapp.core.features.users.commands.RegisterUserCommand;
 
 public class RegistrationRequest {
     private final String firstName;
@@ -24,8 +24,8 @@ public class RegistrationRequest {
     }
 
 
-    public static CreateUserCommand.InputBoundary from(RegistrationRequest request){
-        return new CreateUserCommand.InputBoundary(
+    public static RegisterUserCommand.InputBoundary from(RegistrationRequest request){
+        return new RegisterUserCommand.InputBoundary(
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
