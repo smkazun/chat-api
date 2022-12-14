@@ -16,6 +16,10 @@ import java.time.LocalDateTime;
 public class UpdateUserCommand implements ICommand<UpdateUserCommand.InputBoundary, UpdateUserCommand.OutputBoundary> {
     private UserRepository repository;
 
+    public UpdateUserCommand(UserRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public OutputBoundary execute(InputBoundary input) {
 

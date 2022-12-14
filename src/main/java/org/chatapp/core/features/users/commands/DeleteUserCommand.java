@@ -12,6 +12,10 @@ import org.chatapp.domain.entities.User;
 public class DeleteUserCommand implements ICommand<DeleteUserCommand.InputBoundary, DeleteUserCommand.OutputBoundary> {
     private UserRepository repository;
 
+    public DeleteUserCommand(UserRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public OutputBoundary execute(InputBoundary input) {
 
