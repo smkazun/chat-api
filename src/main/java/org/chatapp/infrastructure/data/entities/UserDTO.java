@@ -6,8 +6,7 @@ import org.chatapp.domain.entities.User;
 import java.time.LocalDateTime;
 
 
-@Table(name="APP_USERS")
-@Entity
+@Entity(name="APP_USERS")
 public class UserDTO {
 
     @Id

@@ -24,25 +24,25 @@ public class JpaUserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(Long id) {
-        final UserDTO result = repository.findById(id).get();
-        return Optional.ofNullable(result.fromThis());
+        return repository
+                .findById(id)
+                .map(UserDTO::fromThis);
     }
-
 
     @Override
     public Optional<User> findByEmail(String email) {
-        final UserDTO result = repository.findByEmail(email);
-        return Optional.ofNullable(result.fromThis());
+        return repository
+                .findByEmail(email)
+                .map(UserDTO::fromThis);
     }
 
     @Override
     public boolean existsByEmail(String email) {
-       return repository.findByEmail(email) != null;
+       return repository.existsByEmail(email);
     }
 
     @Override
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
-
 }

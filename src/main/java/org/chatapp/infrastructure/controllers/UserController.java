@@ -14,6 +14,7 @@ import org.chatapp.infrastructure.data.entities.UserResponse;
 import org.chatapp.infrastructure.mappers.CreateUserInputMapper;
 import org.chatapp.infrastructure.mappers.CreateUserOutputMapper;
 import org.chatapp.infrastructure.mappers.UpdateUserInputMapper;
+import org.chatapp.infrastructure.mappers.UpdateUserOutputMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,6 @@ public class UserController {
     private ICommandExecutor commandExecutor;
     private CreateUserInputMapper createUserInputMapper;
     private UpdateUserInputMapper updateUserInputMapper;
-
     private RegisterUserCommand registerUserCommand;
     private GetUserCommand getUserCommand;
     private UpdateUserCommand updateUserCommand;
@@ -57,7 +57,7 @@ public class UserController {
 
     //TODO;
     @GetMapping("/user")
-    public CompletableFuture<UserResponse> getUser(@RequestParam String email){
+    public CompletableFuture<UserResponse> getUser(@RequestParam("email") String email){
 
         return commandExecutor.execute(
                 new GetUserCommand.InputBoundary(email),
@@ -73,7 +73,7 @@ public class UserController {
         return commandExecutor.execute(
                 updateUserInputMapper.map(request),
                 updateUserCommand,
-                (outputValues) -> CreateUserOutputMapper.map(outputValues.getUser(), httpServletRequest)
+                (outputValues) -> UpdateUserOutputMapper.map(outputValues.getUser(), httpServletRequest)
         );
     }
 
