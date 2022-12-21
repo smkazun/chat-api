@@ -1,7 +1,10 @@
 package org.chatapp.infrastructure.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.chatapp.domain.entities.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -9,9 +12,11 @@ import java.time.LocalDateTime;
 @Entity(name="APP_USERS")
 public class UserDTO {
 
+    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String firstName;
@@ -20,6 +25,7 @@ public class UserDTO {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
     @Column(nullable = false)
     private LocalDateTime dateCreated;
@@ -27,7 +33,7 @@ public class UserDTO {
     @Column(nullable = true)
     private LocalDateTime dateUpdated;
 
-    public UserDTO() {
+    protected UserDTO() {
     }
 
     public UserDTO(long id, String firstName, String lastName, String email, String password, LocalDateTime dateCreated, LocalDateTime dateUpdated)
@@ -36,9 +42,14 @@ public class UserDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.setPassword(password);
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = PASSWORD_ENCODER.encode(password);
     }
 
     public static UserDTO from(User user) {
@@ -62,4 +73,6 @@ public class UserDTO {
                 dateUpdated
         );
     }
+
+
 }
