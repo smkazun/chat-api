@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity(name="APP_USERS")
 public class UserDTO {
 
-    public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
+    //public static final PasswordEncoder PASSWORD_ENCODER = new BCryptPasswordEncoder();
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -42,15 +42,18 @@ public class UserDTO {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.setPassword(password);
+        //this.setPassword(password);
+        this.password = password;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
     }
 
 
-    public void setPassword(String password) {
+    /*public void setPassword(String password) {
         this.password = PASSWORD_ENCODER.encode(password);
     }
+
+     */
 
     public static UserDTO from(User user) {
         return new UserDTO(user.getId(),

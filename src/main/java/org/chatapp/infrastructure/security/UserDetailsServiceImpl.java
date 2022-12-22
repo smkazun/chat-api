@@ -14,24 +14,21 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-public class JpaUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final IJpaUserRepository repository;
 
     @Autowired
-    public JpaUserDetailsService(IJpaUserRepository repository) {
+    public UserDetailsServiceImpl(IJpaUserRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserDTO> load = repository.findByEmail(username);
+        UserDTO load = repository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
 
-        if(!load.isPresent()){
-            throw new UsernameNotFoundException(load.toString());
-        }
-
-        org.chatapp.domain.entities.User user = load.get().fromThis(); //TODO:
+        org.chatapp.domain.entities.User user = load.fromThis(); //TODO:
 
         return new User(user.getFullName(), user.getPassword(), AuthorityUtils.NO_AUTHORITIES);
     }

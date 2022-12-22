@@ -13,7 +13,12 @@ spring:
     url: jdbc:h2:mem:testdb
     username: sa
     password: password
-    driverClassName: org.h2.Driver
+    driver-class-name: org.h2.Driver
+
+  sql:
+    init:
+      schema-locations:
+        - classpath:org/springframework/security/core/userdetails/jdbc/users.ddl
 
 
 management:
