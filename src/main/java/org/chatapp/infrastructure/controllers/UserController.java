@@ -16,6 +16,7 @@ import org.chatapp.infrastructure.mappers.CreateUserOutputMapper;
 import org.chatapp.infrastructure.mappers.UpdateUserInputMapper;
 import org.chatapp.infrastructure.mappers.UpdateUserOutputMapper;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
@@ -56,6 +57,7 @@ public class UserController {
     }
 
     //TODO;
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/user")
     public CompletableFuture<UserResponse> getUser(@RequestParam("email") String email){
 
@@ -67,6 +69,7 @@ public class UserController {
     }
 
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/updateUser/{id}")
     public CompletableFuture<ResponseEntity<ApiResponse>> updateUser(@RequestBody UserInfoUpdateRequest request, HttpServletRequest httpServletRequest){
 
@@ -77,6 +80,7 @@ public class UserController {
         );
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/deleteUser/{id}")
     public CompletableFuture<ApiResponse> deleteUser(@PathVariable Long id){
 

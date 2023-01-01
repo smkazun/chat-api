@@ -3,7 +3,6 @@ package org.chatapp.infrastructure.exceptions;
 import org.chatapp.domain.exceptions.AlreadyInUseException;
 import org.chatapp.domain.exceptions.NotFoundException;
 import org.chatapp.infrastructure.data.entities.ApiResponse;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
