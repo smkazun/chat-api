@@ -9,7 +9,14 @@ import org.chatapp.infrastructure.controllers.AuthenticateUserCommand;
 import org.chatapp.infrastructure.controllers.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutor;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
+
+import java.util.concurrent.Executor;
 
 @Configuration
 public class ModuleConfig {
@@ -40,5 +47,4 @@ public class ModuleConfig {
     public AuthenticateUserCommand authenticateUserCommand(TokenService tokenService, AuthenticationManager authenticationManager){
         return new AuthenticateUserCommand(tokenService, authenticationManager);
     }
-
 }

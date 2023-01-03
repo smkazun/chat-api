@@ -74,7 +74,6 @@ public class SecurityConfiguration {
 
         //dont use {noop}, {bcrypt}, etc. prefixes when this is uncommented
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-
         return new ProviderManager(authenticationProvider);
     }
 
@@ -86,6 +85,7 @@ public class SecurityConfiguration {
         }
          */
 
+        //add withDefaultPasswordEncoder() and can remove AuthenticationManager above
 
         return new InMemoryUserDetailsManager(
                 User.withUsername("user")
@@ -102,7 +102,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/authenticate").permitAll()
-                        .requestMatchers("/getUser").hasAuthority("SCOPE_USER")
+                        .requestMatchers("/getUser").authenticated()//hasAuthority("SCOPE_USER")
                         .requestMatchers("/test").authenticated()
                         //commented gives: 403 means that user is logged in but doesn't have the right permission to view the resource (<- description from web, but does not seem right...
                         .anyRequest().authenticated()
@@ -110,7 +110,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .exceptionHandling(
-                        (ex) -> ex.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+                        (ex) -> ex.authenticationEntryPoint(new RestAuthenticationEntryPoint())
                                 .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                                 )
                 //.anonymous().disable()

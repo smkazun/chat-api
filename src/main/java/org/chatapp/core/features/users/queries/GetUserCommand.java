@@ -24,15 +24,11 @@ public class GetUserCommand implements ICommand<GetUserCommand.InputBoundary, Ge
 
     @Override
     public OutputBoundary execute(InputBoundary input) {
-        Optional<User> user = repository.findByEmail(input.getEmail());
+        User user = repository.findByEmail(input.getEmail())
                 //TODO: do i want this exception in biz logic? && it seems that spring security returns 401 by default instead of this
-                //.orElseThrow(() -> new EmailNotFoundException(input.getEmail()));
-        if(user.isPresent()){
-            return new OutputBoundary(user.get());
-        }
-        else{
-            return new OutputBoundary(new User(1, "","", "","", LocalDateTime.now(),LocalDateTime.now()));
-        }
+                .orElseThrow(() -> new EmailNotFoundException(input.getEmail()));
+
+        return new OutputBoundary(user);
 
         //return new OutputBoundary(user);
     }

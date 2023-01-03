@@ -9,12 +9,22 @@ import org.chatapp.core.features.users.commands.UpdateUserCommand;
 import org.chatapp.core.features.users.queries.GetUserCommand;
 import org.chatapp.infrastructure.data.entities.*;
 import org.chatapp.infrastructure.mappers.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.concurrent.DelegatingSecurityContextExecutor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 
 
 //TODO: responses
@@ -55,7 +65,7 @@ public class UserController {
     }
 
 
-
+    /*
 
     //TODO: registration
     @PostMapping("/createUser")
@@ -68,17 +78,21 @@ public class UserController {
         );
     }
 
+    */
+
     //TODO:
     @GetMapping("/getUser")
-    public CompletableFuture<UserResponse> getUser(@RequestBody RetrieveUserRequest request){
+    public ResponseEntity<UserResponse> getUser(@RequestBody RetrieveUserRequest request) throws ExecutionException, InterruptedException {
 
-        return commandExecutor.execute(
+         var test = commandExecutor.execute(
                 new GetUserCommand.InputBoundary(request.getEmail()),
                 getUserCommand,
-                (outputValues) -> UserResponse.from(outputValues.getUser())
-        );
+                (outputValues) -> UserResponse.from(outputValues.getUser()));
+
+         return ResponseEntity.ok(test.get());
     }
 
+    /*
 
     @PostMapping("/updateUser/{id}")
     public CompletableFuture<ResponseEntity<ApiResponse>> updateUser(@RequestBody UserInfoUpdateRequest request, HttpServletRequest httpServletRequest){
@@ -99,4 +113,6 @@ public class UserController {
                 (outputValues) -> new ApiResponse(true, "User successfully deleted")
         );
     }
+
+     */
 }

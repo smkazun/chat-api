@@ -4,6 +4,7 @@ import org.chatapp.core.contracts.boundary.IInputBoundary;
 import org.chatapp.core.contracts.boundary.IOutputBoundary;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.function.Function;
 
 public interface ICommandExecutor {
