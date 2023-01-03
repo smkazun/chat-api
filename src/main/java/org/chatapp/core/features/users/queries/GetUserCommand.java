@@ -9,6 +9,9 @@ import org.chatapp.domain.entities.User;
 import org.chatapp.domain.exceptions.AlreadyInUseException;
 import org.chatapp.domain.exceptions.EmailNotFoundException;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 /**
  * A user can view its own information
  */
@@ -21,10 +24,17 @@ public class GetUserCommand implements ICommand<GetUserCommand.InputBoundary, Ge
 
     @Override
     public OutputBoundary execute(InputBoundary input) {
-        User user = repository.findByEmail(input.getEmail())
-                .orElseThrow(() -> new EmailNotFoundException(input.getEmail()));
+        Optional<User> user = repository.findByEmail(input.getEmail());
+                //TODO: do i want this exception in biz logic? && it seems that spring security returns 401 by default instead of this
+                //.orElseThrow(() -> new EmailNotFoundException(input.getEmail()));
+        if(user.isPresent()){
+            return new OutputBoundary(user.get());
+        }
+        else{
+            return new OutputBoundary(new User(1, "","", "","", LocalDateTime.now(),LocalDateTime.now()));
+        }
 
-        return new OutputBoundary(user);
+        //return new OutputBoundary(user);
     }
 
 

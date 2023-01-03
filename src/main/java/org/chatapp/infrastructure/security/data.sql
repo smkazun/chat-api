@@ -1,3 +1,4 @@
+
 CREATE TABLE APP_USERS (
      id INT NOT NULL AUTO_INCREMENT,
      first_name VARCHAR(50) NOT NULL,
@@ -15,5 +16,6 @@ INSERT INTO APP_USERS (first_name, last_name, email, password, date_created, dat
 --Spring Security (Jdbc) generated tables
 INSERT INTO USERS (USERNAME, PASSWORD, ENABLED) VALUES ('user', '$2a$10$x9rfO4SjhECePg2YiN92xuTdtpapgEKcvBctcVyfctBSDZ9M0.cKa', true);
 INSERT INTO AUTHORITIES (USERNAME, AUTHORITY) VALUES ('user', 'ROLE_USER');
+
 
 

@@ -5,8 +5,11 @@ import org.chatapp.core.features.users.commands.DeleteUserCommand;
 import org.chatapp.core.features.users.commands.RegisterUserCommand;
 import org.chatapp.core.features.users.commands.UpdateUserCommand;
 import org.chatapp.core.features.users.queries.GetUserCommand;
+import org.chatapp.infrastructure.controllers.AuthenticateUserCommand;
+import org.chatapp.infrastructure.controllers.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 
 @Configuration
 public class ModuleConfig {
@@ -32,5 +35,10 @@ public class ModuleConfig {
         return new DeleteUserCommand(repository);
     }
 
+
+    @Bean
+    public AuthenticateUserCommand authenticateUserCommand(TokenService tokenService, AuthenticationManager authenticationManager){
+        return new AuthenticateUserCommand(tokenService, authenticationManager);
+    }
 
 }

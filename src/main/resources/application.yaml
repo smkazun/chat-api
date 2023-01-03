@@ -1,3 +1,7 @@
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem
+
 spring:
   #jpa:
    # show-sql: true
@@ -5,9 +9,17 @@ spring:
    #   ddl-auto: none
    # database-platform: org.hibernate.dialect.H2Dialect
 
+  #H2 DB Console Access
   h2:
     console:
       enabled: true
+
+#Enable logging output for Spring Security
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
 
 
 #management:

@@ -1,2 +1,3 @@
-package org.chatapp.infrastructure.security;public class JwtUtil {
+package org.chatapp.infrastructure.security;
+public class JwtUtil {
 }
