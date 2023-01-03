@@ -1,6 +1,5 @@
 package org.chatapp.infrastructure.impl;
 
-
 import org.chatapp.core.contracts.ICommand;
 import org.chatapp.core.contracts.ICommandExecutor;
 import org.chatapp.core.contracts.boundary.IInputBoundary;

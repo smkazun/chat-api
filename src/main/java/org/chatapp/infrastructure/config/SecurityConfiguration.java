@@ -103,6 +103,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/authenticate").permitAll()
                         .requestMatchers("/getUser").hasAuthority("SCOPE_USER")
+                        .requestMatchers("/test").authenticated()
                         //commented gives: 403 means that user is logged in but doesn't have the right permission to view the resource (<- description from web, but does not seem right...
                         .anyRequest().authenticated()
                 )
